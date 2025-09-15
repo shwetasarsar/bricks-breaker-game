@@ -60,9 +60,9 @@ function App() {
 
   return (
     <UserContext.Provider value={{score: score, lives: lives, setScore, setLives}}>
-    <div className="w-6/12 mx-auto mt-2 box-border">
+    <div data-testid="game-container" className="w-6/12 mx-auto mt-2 box-border">
      <ScoreBoard/>
-      <canvas ref={canvasRef} className="block w-[100%] h-[100%] rounded-lg shadow-md"></canvas>
+      <canvas data-testid="game-canvas" ref={canvasRef} className="block w-[100%] h-[100%] rounded-lg shadow-md"></canvas>
      <ButtonActions />
     </div>
     </UserContext.Provider>

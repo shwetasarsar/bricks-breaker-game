@@ -29,9 +29,9 @@ const ButtonActions = () => {
     }
     return (
         <div className='mt-2 flex justify-evenly p-2'>
-            <Button onClick={pauseGame} btnName="Pause" />
-            <Button onClick={startGame} btnName="Start" className={(lives <= 0) ? 'cursor-default pointer-events-none' : 'cursor-pointer pointer-events-auto'}/>
-            <Button onClick={restartGame} btnName="Restart" />
+            <Button data-testid="pause-btn" onClick={pauseGame} btnName="Pause" />
+            <Button data-testid="start-btn" onClick={startGame} btnName="Start" className={(lives <= 0) ? 'cursor-default pointer-events-none' : 'cursor-pointer pointer-events-auto'}/>
+            <Button data-testid="restart-btn" onClick={restartGame} btnName="Restart" />
         </div>
     )
 }
