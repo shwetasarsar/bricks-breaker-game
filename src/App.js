@@ -15,22 +15,11 @@ function App() {
   const paddleRef = useRef(createInitialPaddle());
   const bricksRef = useRef(createInitialBricks());
 
-  const keyDownHandler =(e)=>{
-      if(e.key === 'ArrowLeft') paddleRef.current.speed = -6;
-      if(e.key === 'ArrowRight') paddleRef.current.speed = 6;
-  }
-
-  const keyUpHandler =(e)=>{
-    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') paddleRef.current.speed = 0;
-  }
-
   useEffect(()=>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     canvas.width = 800;
     canvas.height = 600;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const ball = ballRef.current;
     const paddle = paddleRef.current;
@@ -48,12 +37,67 @@ function App() {
       }
     }
 
-    drawBall(ctx, ball);
-    drawPaddle(ctx, paddle);
-    drawBricks(ctx, bricks);
+    const keyDownHandler =(e)=>{
+      if(e.key === 'ArrowLeft') paddleRef.current.speed = -6;
+      if(e.key === 'ArrowRight') paddleRef.current.speed = 6;
+    }
+
+    const keyUpHandler =(e)=>{
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') paddleRef.current.speed = 0;
+    }
 
     document.addEventListener("keydown", keyDownHandler);
-    document.addEventListener("keyup", keyUpHandler)
+    document.addEventListener("keyup", keyUpHandler);
+
+    const draw =()=>{
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawBall(ctx, ball);
+      drawPaddle(ctx, paddle);
+      drawBricks(ctx, bricks);
+    }
+
+    const update =()=>{
+      //move paddle
+      paddle.x += paddle.speed
+      if(paddle.x < 0 ) paddle.x= 0;
+      if(paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+
+      //move ball
+      ball.x += ball.speedX;
+      ball.y += ball.speedY;
+
+      //bounce off wall
+      if(ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0){
+        ball.speedX = -ball.speedX;
+      }
+      if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0){
+        ball.speedY = -ball.speedY;
+      }
+    }
+
+    const collision =()=>{
+      bricks.forEach((brick)=>{
+        if(ball.x + ball.radius > brick.x && brick.isDestroyed !== true){
+          brick.isDestroyed = true
+          setScore(prev => prev + 10)
+        }
+      })
+    }
+
+    const gameLoop =()=>{
+      draw();
+      update();
+      collision();
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+
+    return ()=> {
+      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keyup", keyUpHandler);
+    };
 
   }, [])
 
