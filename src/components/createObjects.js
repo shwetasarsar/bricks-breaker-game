@@ -7,9 +7,9 @@ export const createInitialBall =()=>({
 });
 
 export const createInitialPaddle =()=>({
-    x: 350,
-    y: 580,
-    width: 100,
+    x: 300,
+    y: 500,
+    width: 150,
     height: 20,
     speed: 0
 });

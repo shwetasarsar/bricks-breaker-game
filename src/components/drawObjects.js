@@ -7,7 +7,7 @@ export const drawBall = (ctx, ball) =>{
 }
 
 export const drawPaddle = (ctx, paddle) =>{
-    ctx.fillStyle ="black";
+    ctx.fillStyle ="white";
     ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height)
 }
 
