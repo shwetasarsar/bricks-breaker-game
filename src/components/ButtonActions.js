@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import UserContext from '../utils/UserConext';
+import { UserContext } from '../utils/UserContext';
 
 const Button =({onClick, btnName, className})=>{
     return <button className={`sm:text-sm md:text-[20px] border border-gray-400 rounded-lg w-[92px] py-2 hover:bg-gray-500 hover:text-white ${className}`} onClick={()=>onClick()}>

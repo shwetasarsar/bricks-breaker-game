@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ScoreBoard from "../ScoreBoard";
-import UserContext from "../../utils/UserConext";
+import {UserContext} from "../../utils/UserContext";
 
 describe('ScoreBoard Component', ()=>{
     const defaultData = {score: 0, lives: 3};

@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import UserContext from "./utils/UserConext";
+import React, {useContext, useEffect, useRef} from "react";
+import {UserContext} from "./utils/UserContext";
 import ScoreBoard from "./components/ScoreBoard";
 import ButtonActions from "./components/ButtonActions";
 import { createInitialBall, createInitialPaddle, createInitialBricks, brickContainer} from "./components/createObjects";
@@ -7,13 +7,12 @@ import { drawBall, drawPaddle, drawBricks } from "./components/drawObjects";
 
 
 function App() {
-  const [score, setScore] = useState(0);
-  const [lives, setLives] = useState(3);
-
   const canvasRef = useRef(null);
   const ballRef = useRef(createInitialBall());
   const paddleRef = useRef(createInitialPaddle());
   const bricksRef = useRef(createInitialBricks());
+
+  const {setScore} = useContext(UserContext)
 
   useEffect(()=>{
     const canvas = canvasRef.current;
@@ -103,13 +102,11 @@ function App() {
 
 
   return (
-    <UserContext.Provider value={{score: score, lives: lives, setScore, setLives}}>
     <div data-testid="game-container" className="w-6/12 mx-auto mt-2 box-border">
      <ScoreBoard/>
       <canvas data-testid="game-canvas" ref={canvasRef} className="block w-[100%] h-[100%] rounded-lg shadow-md bg-black"></canvas>
      <ButtonActions />
     </div>
-    </UserContext.Provider>
   );
 }
 
